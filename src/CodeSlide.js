@@ -56,6 +56,7 @@ class CodeSlide extends React.Component {
       title: PropTypes.oneOfType([PropTypes.element, PropTypes.string]),
       note: PropTypes.oneOfType([PropTypes.element, PropTypes.string])
     })),
+    id: PropTypes.string,
     showLineNumbers: PropTypes.bool
   };
 
@@ -106,7 +107,7 @@ class CodeSlide extends React.Component {
   }
 
   getStorageId() {
-    return 'code-slide:' + this.props.slideIndex;
+    return 'code-slide:' + (this.props.id || this.props.slideIndex);
   }
 
   getStorageItem() {
@@ -119,7 +120,7 @@ class CodeSlide extends React.Component {
 
   isSlideActive() {
     const slide = this.context.store.getState().route.slide;
-    return this.props.slideIndex === parseInt(slide);
+    return this.props.id === slide || this.props.slideIndex === parseInt(slide);
   }
 
   goTo(active, skipLocalStorage) {
@@ -195,7 +196,10 @@ class CodeSlide extends React.Component {
     const loc = range.loc || [];
     const slideBg = bgColor || defaultBgColor;
 
-    style.color = color || style.color;
+    const newStyle = {
+      ...style,
+      color: color || style.color,
+    };
 
     const lines = getHighlightedCodeLines(code, lang).map((line, index) => {
       return <div
@@ -213,7 +217,7 @@ class CodeSlide extends React.Component {
       <Slide ref='slide' bgColor={slideBg} margin={1} {...rest}>
         {range.title && <CodeSlideTitle>{range.title}</CodeSlideTitle>}
 
-        <pre ref="container" style={style}>
+        <pre ref="container" style={newStyle}>
           <code style={{ display: "inline-block", textAlign: "left" }}>{lines}</code>
         </pre>
 

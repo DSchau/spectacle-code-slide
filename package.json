@@ -1,6 +1,6 @@
 {
-  "name": "spectacle-code-slide",
-  "version": "0.4.0",
+  "name": "@dschau/spectacle-code-slide",
+  "version": "0.5.2",
   "description": "Present code with style.",
   "main": "lib/index.js",
   "scripts": {
@@ -30,5 +30,8 @@
     "react": "^0.14.0 || ^15.0.0",
     "react-dom": "^0.14.0 || ^15.0.0",
     "spectacle": "^1.2.5"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }
